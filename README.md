@@ -660,7 +660,7 @@ Hunter includes safety mechanisms (authentication, scope, self‑defense, permis
 
 ## License
 
-This project is provided as‑is for educational and authorized security testing.  (MIT, Apache 2.0, etc.). No warranty is provided.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ---
 
