@@ -1,6 +1,6 @@
 # Hunter Unchained
 
-> **Autonomous, self‑learning, zero‑day‑capable red‑team assistant — fully local, no cloud, no tokens.**
+> **Autonomous, self‑learning red‑team assistant — fully local, no cloud, no tokens.**
 
 Hunter Unchained is a modular AI‑driven security testing platform that plans, executes, and reports on offensive security engagements. It combines a local large language model (LLM) with tool orchestration, continuous learning, multi‑method vulnerability discovery, human‑in‑the‑loop safety, and automatic report generation.
 
