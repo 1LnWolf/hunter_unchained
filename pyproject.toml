@@ -1,0 +1,33 @@
+[project]
+name = "hunter-unchained"
+version = "0.4.0"
+description = "Autonomous red-team assistant with self-learning"
+requires-python = ">=3.11"
+dependencies = [
+    "pyyaml",
+    "rich",
+    "chromadb",
+    "sentence-transformers",
+    "requests",
+    "aiohttp",
+    "aiohttp_socks",
+    "feedparser",
+    "python-dotenv",
+    "libnmap",
+    "sqlalchemy",
+    "gnupg",
+    "cryptography",
+    "docker",
+    "psutil",
+    "ollama",
+    "llama-cpp-python",
+    "trafilatura",
+    "beautifulsoup4",
+    "rank_bm25",
+    "pdfplumber",
+    "angr",
+    "pwntools",
+]
+
+[project.scripts]
+hunter = "hunter.main:main"

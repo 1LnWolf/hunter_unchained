@@ -1,0 +1,124 @@
+master:
+  auth_method: "gpg"                    # gpg or fido2 (only gpg implemented)
+  gpg_key_fingerprint: "YOUR_FINGERPRINT"  # your GPG key fingerprint
+
+execution:
+  approval_mode: "mission"              # approve plan once, then run
+  critical_checkpoints:                 # pause before these risk levels
+    - "exploit"
+    - "lateral_movement"
+    - "credential_dump"
+    - "critical"                        # catches tool installs, fuzzing
+  auto_approve_recon: true              # low-risk recon runs without asking
+
+scope:
+  networks: ["0.0.0.0/0"]             # allowed IP ranges
+  domains: []                           # allowed domains
+  exclude: []                           # never touch these
+
+stealth:
+  enable: true                          # turn on stealth wrapper
+  scan_profile: "paranoid"              # future: fast/normal/paranoid
+  process_masquerade: true              # rename processes to kworker/etc.
+  proxies:
+    socks5: "socks5://127.0.0.1:9050"   # Tor or custom SOCKS proxy
+
+model:
+  provider: "auto"                      # auto, ollama, llama_cpp
+  temperature: 0.2                      # LLM creativity (lower = focused)
+  max_tokens: 4096                      # max output length
+  context_window: 8192                  # total context
+  ollama:
+    model_name: "hermes2-pro-mistral:7b"
+    endpoint: "http://localhost:11434"
+  llama_cpp:
+    model_path: "models/mistral-7b-instruct-v0.2.Q4_K_M.gguf"
+    n_threads: 8
+    n_gpu_layers: 0                     # 35 for GPU offload
+
+knowledge:
+  vector_store_path: "data/knowledge/"  # ChromaDB storage
+  embedding_model: "all-MiniLM-L6-v2"   # lightweight embeddings
+  live_feeds: true                      # background learning on/off
+  sandbox_validation: true              # test untrusted code in Docker
+  sandbox_image: "hunter-sandbox:latest"
+  untrusted_code_policy: "require_approval"
+  hybrid_weight: 0.5                    # 0=sparse only, 1=dense only
+
+memory:
+  db_path: "data/memory.db"             # SQLite episodic memory
+  vector_store_path: "data/memory_vectors/"  # vector memory
+
+logging:
+  session_dir: "data/sessions/"         # encrypted session logs
+  log_level: "DEBUG"
+  encrypt_logs: true
+  gpg_recipient: "your@email.com"       # who can decrypt logs
+
+reporting:
+  enabled: true                         # auto-generate reports
+  output_dir: "data/reports/"
+  format: "markdown"
+
+tools:
+  registry: "tools/tool_index.yaml"
+  auto_discover: true                   # scan entire PATH
+  auto_discover_risk: "low"
+  allow_dynamic_install: true           # install missing tools
+  install_checkpoint: "critical"        # always ask before installing
+  github:
+    api_token: ""                       # optional GitHub PAT (free)
+    known_repos_file: "tools/github_repos.yaml"
+    max_clone_depth: 1
+    install_timeout: 600
+
+learning:
+  search_provider: "duckduckgo"         # no API key needed
+  max_results: 10
+  search_api_key: ""                    # only for Google
+  google_cse_id: ""
+  search_timeout: 10
+  auto_research: false                  # research before each mission
+  custom_scrape_urls: []                # list of URLs to scrape periodically
+
+fuzzing:
+  enabled: true
+  max_campaign_time: 3600               # seconds per target
+  max_crashes: 10
+  use_docker: true
+  sanitizer: "address"                  # ASAN, UBSAN, etc.
+  ingest_findings: true                 # add fuzzing results to KB
+
+exploitation:
+  enable_auto_exploit_gen: true
+  exploit_timeout: 300
+  max_rop_chain_length: 10
+  target_arch: "x86_64"
+
+self_defense:
+  protected_hosts: ["127.0.0.1", "::1", "localhost"]
+  protected_files: ["/etc/shadow", "/home/user/.ssh"]
+  kill_switch_script: "scripts/kill_switch.sh"
+  block_host_tools: true                # never attack the host
+  require_second_factor: true           # extra confirmation for zero-day
+
+innovation:
+  enabled: true
+  mutation_rate: 0.3
+  sandbox_validation: true
+
+debugging:
+  enabled: true
+  auto_apply_fixes: false               # never apply fixes without approval
+  max_diagnostic_depth: 5
+  collect_system_logs: true
+
+discovery:
+  static_analysis: true                 # semgrep, bandit, flawfinder
+  symbolic_execution: false             # angr (heavy)
+  llm_code_review: true                 # LLM reads code line-by-line
+  patch_diffing: false                  # requires two binary versions
+  taint_analysis: false                 # taintgrind, etc.
+  max_fuzz_time: 3600
+  max_symbolic_time: 600
+  max_static_files: 1000

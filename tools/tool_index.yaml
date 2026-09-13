@@ -1,0 +1,30 @@
+nmap:
+  path: /usr/bin/nmap
+  safe_flags: ["-sV", "-sC", "-p-", "-oX", "-sn", "-f", "--scan-delay"]
+  output_parser: nmap_xml
+
+gobuster:
+  path: /usr/bin/gobuster
+  safe_flags: ["dir", "-u", "-w", "-t", "-o"]
+  output_parser: generic_json
+
+msfconsole:
+  path: /usr/bin/msfconsole
+  safe_flags: ["-q", "-x", "-r"]
+  output_parser: generic_json
+  dangerous: true
+
+gdb:
+  path: /usr/bin/gdb
+  safe_flags: ["-batch", "-x", "-q"]
+  dangerous: false
+
+journalctl:
+  path: /usr/bin/journalctl
+  safe_flags: []
+  dangerous: false
+
+systemctl:
+  path: /usr/bin/systemctl
+  safe_flags: []
+  dangerous: true

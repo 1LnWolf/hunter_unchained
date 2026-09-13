@@ -1,0 +1,7 @@
+sliver:
+  url: https://github.com/BishopFox/sliver
+  description: "Adversary Emulation Framework"
+
+crackmapexec:
+  url: https://github.com/byt3bl33d3r/CrackMapExec
+  description: "A swiss army knife for pentesting networks"
